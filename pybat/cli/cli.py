@@ -795,3 +795,4 @@ def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
                   help="Flag to indicate that the structure is metallic. This "
                        "will make the algorithm choose Methfessel-Paxton "
                        "smearing of 0.2 eV.")
+    pass
