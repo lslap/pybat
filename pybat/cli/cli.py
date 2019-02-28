@@ -238,7 +238,7 @@ def setup():
                   help="Set LORBIT=11 for spin-polarised calculations."
                )
 
-def dos(structure_file, functional, lorbit=False, calculation_dir=""):
+def dos(structure_file, functional, calculation_dir="", lorbit=False):
     """
     Set up a DOS-calculation for a structure.
     """
@@ -508,7 +508,6 @@ def workflow():
     Scripts for setting up workflows and submitting them to the server.
     """
     pass
-
 
 @workflow.command(context_settings=CONTEXT_SETTINGS)
 @click.argument("structure_file", nargs=1)
