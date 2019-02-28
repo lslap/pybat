@@ -238,7 +238,7 @@ def setup():
                   help="Set LORBIT=11 for spin-polarised calculations."
                )
 
-def dos(structure_file, functional, lorbit=False, calculation_dir="",):
+def dos(structure_file, functional, lorbit=False, calculation_dir=""):
     """
     Set up a DOS-calculation for a structure.
     """
