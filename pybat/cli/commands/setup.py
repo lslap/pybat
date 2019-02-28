@@ -405,7 +405,7 @@ def neb(directory, nimages=8, functional=("pbe", {}), is_metal=False,
     neb_calculation.visualize_transition(os.path.join(directory, "transition.cif"))
 
 
-def dos(structure_file, chgcar_file, functional, kpoint_density):
+def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
     """
     Set up Density of States calculation.
 
@@ -444,21 +444,20 @@ def dos(structure_file, chgcar_file, functional, kpoint_density):
         if functional[0] == "pbeu":
             calculation_dir += "_" + "".join(k + str(functional[1]["LDAUU"][k]) for k
                                              in functional[1]["LDAUU"].keys())
-        calculation_dir += "_relax"
+        calculation_dir += "_dos"
 
-    # For metals, add some Methfessel Paxton smearing
-    if is_metal:
-        user_incar_settings.update({"ISMEAR": 2, "SIGMA": 0.2})
+    # For spin-polarised calculations
+    if lorbit:
+        user_incar_settings.update({"LORBIT": 11})
+
+    # For DOS you need to start with the ICHARG-file
+    user_incar_settings.update({"ICHARG": 11})
 
     # Set up the geometry optimization
     geo_optimization = BulkRelaxSet(structure=structure,
                                     user_incar_settings=user_incar_settings,
+                                    user_kpoints_settings={"reciprocal_density"},
                                     potcar_functional=DFT_FUNCTIONAL)
-
-    # Write the input files to the geometry optimization directory
-    geo_optimization.write_input(calculation_dir)
-    shutil.copy(structure_file,
-                os.path.join(calculation_dir, "initial_cathode.json"))
 
     return calculation_dir
 
