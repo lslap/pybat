@@ -235,19 +235,19 @@ def setup():
                        "*\xa0'hse\xa0hfscreen\xa00.3'\xa0~\xa0HSE03\n"
                   )
 @click.option("--lorbit", "-l", is_flag=True,
-                  help="Flag to indicate that the structure is metallic. This "
-                       "will make the algorithm choose Methfessel-Paxton "
-                       "smearing of 0.2 eV."
+                  help="Set LORBIT=11 for spin-polarised calculations."
                )
 
-def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
+def dos(structure_file, functional, lorbit=False, calculation_dir="",):
     """
     Set up a DOS-calculation for a structure.
     """
     from pybat.cli.commands.setup import dos
 
     dos(structure_file=structure_file,
-          functional=string_to_functional(functional))
+        functional=string_to_functional(functional),
+        calculation_dir=calculation_dir,
+        lorbit=lorbit)
 
 @setup.command(context_settings=CONTEXT_SETTINGS)
 @click.option("--functional", "-f", default="pbe",
