@@ -221,7 +221,6 @@ def setup():
     """
     pass
 
-
 @setup.command(context_settings=CONTEXT_SETTINGS)
 @click.option("--functional", "-f", default="pbe",
               help="Option for configuring the functional used in the calculation. "
@@ -239,6 +238,34 @@ def setup():
               help="The directory in which to set up the calculation. "
                    "Default is FUNCTIONAL_relax.")
 @click.option("--write_chgcar", "-C", is_flag=True)
+
+def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
+    """
+    Set up a DOS-calculation for a structure.
+    """
+    from pybat.cli.commands.setup import dos
+
+    dos(structure_file=structure_file,
+          functional=string_to_functional(functional))
+
+@setup.command(context_settings=CONTEXT_SETTINGS)
+@click.argument("structure_file", nargs=1)
+@click.option("--functional", "-f", default="pbe",
+                  help="Option for configuring the functional used in the calculation. "
+                       "User must provide the functional information in the form of a "
+                       "single string, starting with the string that determines the "
+                       "functional, then with string/float pairs for specifying further "
+                       "settings. Defaults to 'pbe'. Examples:\n"
+                       "* 'pbeu Mn\xa03.9 V 3.1' ~ PBE+U (Dudarev approach) with effective "
+                       "U equal to 3.9 for Mn and 3.1 for V.\n"
+                       "* 'hse' ~ HSE06\n"
+                       "*\xa0'hse\xa0hfscreen\xa00.3'\xa0~\xa0HSE03\n"
+                  )
+@click.option("--lorbit", "-l", is_flag=True,
+                  help="Flag to indicate that the structure is metallic. This "
+                       "will make the algorithm choose Methfessel-Paxton "
+                       "smearing of 0.2 eV."
+                  )
 def scf(structure_file, functional, calculation_dir, write_chgcar):
     """
     Set up a geometry optimization for a structure.
@@ -769,30 +796,4 @@ def string_to_functional(dict_string):
 
 # endregion
 
-def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
-    """
-    Set up a DOS-calculation for a structure.
-    """
-    from pybat.cli.commands.setup import dos
 
-    dos(structure_file=structure_file,
-          functional=string_to_functional(functional))
-
-    @setup.command(context_settings=CONTEXT_SETTINGS)
-    @click.argument("structure_file", nargs=1)
-    @click.option("--functional", "-f", default="pbe",
-                  help="Option for configuring the functional used in the calculation. "
-                       "User must provide the functional information in the form of a "
-                       "single string, starting with the string that determines the "
-                       "functional, then with string/float pairs for specifying further "
-                       "settings. Defaults to 'pbe'. Examples:\n"
-                       "* 'pbeu Mn\xa03.9 V 3.1' ~ PBE+U (Dudarev approach) with effective "
-                       "U equal to 3.9 for Mn and 3.1 for V.\n"
-                       "* 'hse' ~ HSE06\n"
-                       "*\xa0'hse\xa0hfscreen\xa00.3'\xa0~\xa0HSE03\n"
-                  )
-    @click.option("--lorbit", "-l", is_flag=True,
-                  help="Flag to indicate that the structure is metallic. This "
-                       "will make the algorithm choose Methfessel-Paxton "
-                       "smearing of 0.2 eV.")
-    pass
