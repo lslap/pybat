@@ -234,6 +234,9 @@ def setup():
                        "* 'hse' ~ HSE06\n"
                        "*\xa0'hse\xa0hfscreen\xa00.3'\xa0~\xa0HSE03\n"
                   )
+@click.option("--calculation_dir", "-d", default="",
+              help="The directory in which to set up the calculation. "
+                   "Default is FUNCTIONAL_relax.")
 @click.option("--lorbit", "-l", is_flag=True,
                   help="Set LORBIT=11 for spin-polarised calculations."
                )
