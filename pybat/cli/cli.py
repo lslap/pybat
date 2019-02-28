@@ -768,3 +768,12 @@ def string_to_functional(dict_string):
         return functional, functional_dict
 
 # endregion
+
+def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
+    """
+    Set up a DOS-calculation for a structure.
+    """
+    from pybat.cli.commands.setup import dos
+
+    dos(structure_file=structure_file,
+          functional=string_to_functional(functional))
