@@ -791,9 +791,6 @@ def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
                        "* 'hse' ~ HSE06\n"
                        "*\xa0'hse\xa0hfscreen\xa00.3'\xa0~\xa0HSE03\n"
                   )
-    @click.option("--calculation_dir", "-d", default="",
-                  help="The directory in which to set up the calculation. "
-                       "Default is FUNCTIONAL_relax.")
     @click.option("--lorbit", "-l", is_flag=True,
                   help="Flag to indicate that the structure is metallic. This "
                        "will make the algorithm choose Methfessel-Paxton "
