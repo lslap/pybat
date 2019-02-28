@@ -405,15 +405,13 @@ def neb(directory, nimages=8, functional=("pbe", {}), is_metal=False,
     neb_calculation.visualize_transition(os.path.join(directory, "transition.cif"))
 
 
-def dos(structure_file, chgcar_file, functional, kpoint_density, lorbit=False):
+def dos(structure_file, functional, calculation_dir="", lorbit=False):
     """
     Set up Density of States calculation.
 
     Args:
         structure_file (str): Structure for which the DOS...
-        chgcar_file (str):
         functional (tuple):
-        kpoint_density (float):
 
     Returns:
         calculation_dir (str): Directory in which the calculation is set up.

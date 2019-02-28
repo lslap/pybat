@@ -240,7 +240,6 @@ def setup():
 @click.option("--lorbit", "-l", is_flag=True,
                   help="Set LORBIT=11 for spin-polarised calculations."
                )
-
 def dos(structure_file, functional, calculation_dir="", lorbit=False):
     """
     Set up a DOS-calculation for a structure.
